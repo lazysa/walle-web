@@ -44,7 +44,9 @@ class PassportAPI(ApiResource):
         """
         form = LoginForm(request.form, csrf=False)
         if form.validate_on_submit():
-            user = UserModel.query.filter_by(email=form.email.data).first()
+            # 邮箱登录改为用户名登录-数据库里查询用户名
+            user = UserModel.query.filter_by(username=form.email.data).first()
+            #user = UserModel.query.filter_by(email=form.email.data).first()
 
             if user is not None and user.verify_password(form.password.data):
                 try:

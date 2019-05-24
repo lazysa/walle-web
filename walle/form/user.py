@@ -64,8 +64,16 @@ class UserUpdateForm(FlaskForm):
         if field.data and not re.match(validator_regx_password, field.data):
             raise ValidationError('密码至少6个字符，至少1个大写字母，1个小写字母，1个数字')
 
+# 邮箱登录改为用户名登录-用户名规则
+class LoginForm(FlaskForm):
+    email = StringField('email', [validators.Length(min=4, max=35),
+                                  Regexp(r'^(.+)', message='用户名格式不正确')])
+    password = PasswordField('Password', [validators.Length(min=6)])
 
+
+'''
 class LoginForm(FlaskForm):
     email = StringField('email', [validators.Length(min=6, max=35),
                                   Regexp(r'^(.+)@(.+)\.(.+)', message='邮箱格式不正确')])
     password = PasswordField('Password', [validators.Length(min=6)])
+'''
